@@ -1,8 +1,83 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Suprise...!</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surprise...!</title>
+    <style>
+        /* CSS goes here */
+        @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Dancing+Script&display=swap');
+
+        body {
+            font-family: 'Great Vibes', cursive;
+            text-align: center;
+            margin: 0;
+            background-color: #f9f4f5; /* Soft pastel color for the background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            padding: 30px;
+        }
+
+        h1 {
+            font-size: 36px;
+            margin-bottom: 30px;
+            color: #322429; /* Romantic color for the heading */
+        }
+
+        .buttons {
+            margin: 20px;
+        }
+
+        button {
+            font-size: 20px;
+            padding: 12px 24px;
+            margin: 10px;
+            border: none;
+            border-radius: 20px;
+            background-color: #ff4081; /* Romantic color for the buttons */
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #ff5c8d; /* Lighter shade on hover for a soft effect */
+            transform: scale(1.1); /* Subtle zoom effect */
+        }
+
+        button:active {
+            transform: scale(0.9); /* Click effect */
+        }
+
+        .popup {
+            display: none;
+            background-color: #fff;
+            border: 1px solid #e91e63; /* Romantic color for the border */
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 999;
+            font-family: 'Dancing Script', cursive;
+            font-size: 24px;
+            color: #e91e63; /* Romantic color for the popup text */
+            animation: fadeIn 0.3s ease; /* Smooth fade-in animation */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -15,6 +90,32 @@
             <p>Aww, thank you! I knew you would say yes.</p>
         </div>
     </div>
-    <script src="script.js"></script>
+
+    <script>
+        // JavaScript goes here
+        const noButton = document.getElementById("no-btn");
+        const yesButton = document.getElementById("yes-btn");
+        const popup = document.getElementById("popup");
+
+        // Move the "No" button randomly around the screen
+        noButton.addEventListener("mouseover", () => {
+            noButton.style.position = "absolute";
+            noButton.style.left = Math.random() * 80 + "vw";
+            noButton.style.top = Math.random() * 80 + "vh";
+        });
+
+        // Show the popup when "Yes" is clicked
+        yesButton.addEventListener("click", () => {
+            popup.style.display = "block";
+        });
+
+        // Hide the popup when clicked
+        popup.addEventListener("click", () => {
+            popup.style.display = "none";
+        });
+
+        // Hide the popup initially
+        popup.style.display = "none";
+    </script>
 </body>
 </html>
