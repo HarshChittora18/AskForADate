@@ -130,7 +130,7 @@
 </head>
 <body>
     <div class="container" id="content-container">
-        <h1>Hey, would you like to join me on an unforgettable date?</h1>
+        <h1>Hey, you! Fancy joining me for an unforgettable date?</h1>
         <div class="buttons">
             <button id="no-btn">No</button>
             <button id="yes-btn">Yes</button>
@@ -179,13 +179,30 @@
         }
 
         // Move the "No" button randomly around the screen
-        noButton.addEventListener("mouseover", () => {
-            noButton.style.position = "absolute";
-            noButton.style.left = Math.random() * 80 + "vw";
-            noButton.style.top = Math.random() * 80 + "vh";
+        function moveButton() {
+            const buttonBounds = noButton.getBoundingClientRect();
+            const windowWidth = window.innerWidth;
+            const windowHeight = window.innerHeight;
+
+            const randomX = Math.random() * (windowWidth - buttonBounds.width);
+            const randomY = Math.random() * (windowHeight - buttonBounds.height);
+            noButton.style.position = 'absolute';
+            noButton.style.left = randomX + 'px';
+            noButton.style.top = randomY + 'px';
+        }
+
+        // Start moving the "No" button randomly
+        noButton.addEventListener("mousedown", () => {
+            const moveInterval = setInterval(moveButton, 100); // Change position every 100ms
+
+            // Stop moving when the button is clicked
+            noButton.addEventListener("click", () => {
+                clearInterval(moveInterval);
+                noButton.style.display = "none"; // Hide "No" button
+            }, { once: true });
         });
 
-        // Show the popup, remove the "No" button, hide the background text, and trigger the confetti when "Yes" is clicked
+        // Show the popup, hide the background text, and trigger the confetti when "Yes" is clicked
         yesButton.addEventListener("click", () => {
             popup.style.display = "block";
             noButton.style.display = "none"; // Hide "No" button
