@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Surprise...!</title>
     <style>
-        /* CSS goes here */
+        /* General styling */
         body {
             font-family: Arial, sans-serif;
             text-align: center;
@@ -79,32 +79,65 @@
             margin: 0;
         }
 
-        /* Balloon and confetti animation */
-        .balloon {
-            position: absolute;
-            bottom: -50px;
-            width: 30px;
-            height: 50px;
-            background-color: #ff4081;
-            border-radius: 50% 50% 50% 50%;
-            transform: rotate(-45deg);
-            animation: riseUp 6s ease-in infinite;
+        /* Confetti animation */
+        .confetti-container {
+            user-select: none;
+            z-index: 10;
         }
 
-        .balloon:before {
-            content: '';
-            position: absolute;
-            width: 2px;
-            height: 60px;
-            background-color: #ff4081;
-            bottom: -60px;
-            left: 50%;
-            transform: translateX(-50%);
+        .confetti {
+            position: fixed;
+            left: 0;
+            right: 0;
+            display: flex;
         }
 
-        @keyframes riseUp {
-            from { bottom: -100px; opacity: 0; }
-            to { bottom: 100vh; opacity: 1; }
+        .confetti .square,
+        .confetti .rectangle,
+        .confetti .hexagram,
+        .confetti .pentagram,
+        .confetti .dodecagram,
+        .confetti .wavy-line {
+            width: 1rem;
+            height: 1rem;
+            background-color: var(--bg);
+            transform: rotate(-140deg);
+            margin: 0 0.2rem;
+            animation-name: confetti;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+            animation-duration: calc(70s / var(--speed));
+        }
+
+        .confetti .hexagram {
+            width: 0;
+            height: 0;
+            border-left: 0.5rem solid transparent;
+            border-right: 0.5rem solid transparent;
+            border-bottom: 1rem solid var(--bg);
+            position: relative;
+        }
+
+        .confetti .hexagram:after {
+            content: "";
+            width: 0;
+            height: 0;
+            border-left: 0.5rem solid transparent;
+            border-right: 0.5rem solid transparent;
+            border-top: 1rem solid var(--bg);
+            position: absolute;
+            top: 0.33rem;
+            left: -0.5rem;
+        }
+
+        /* Confetti animation rules */
+        @keyframes confetti {
+            0% {
+                transform: translateY(-100vh);
+            }
+            100% {
+                transform: translateY(100vh);
+            }
         }
 
         /* Fade-in effect for the popup */
@@ -139,18 +172,23 @@
 
     <div class="popup" id="popup">
         <p>Yay! I knew you'd say yes! Get ready for an amazing time!</p>
+        <div class="confetti-container">
+            <div class="confetti">
+                <i style="--speed: 10; --bg: yellow" class="square"></i>
+                <i style="--speed: 18; --bg: white" class="pentagram"></i>
+                <i style="--speed: 29; --bg: green" class="rectangle"></i>
+                <i style="--speed: 17; --bg: blue" class="hexagram"></i>
+                <i style="--speed: 33; --bg: red" class="pentagram"></i>
+                <i style="--speed: 26; --bg: yellow" class="dodecagram"></i>
+                <i style="--speed: 24; --bg: pink" class="wavy-line"></i>
+            </div>
+        </div>
     </div>
 
-    <div class="footer">@harsh :)</div>
-
-    <!-- Balloons -->
-    <div class="balloon" style="left: 20%; background-color: #ff4081;"></div>
-    <div class="balloon" style="left: 40%; background-color: #4caf50;"></div>
-    <div class="balloon" style="left: 60%; background-color: #2196f3;"></div>
-    <div class="balloon" style="left: 80%; background-color: #ffeb3b;"></div>
+    <div class="footer">@Harsh :)</div>
 
     <script>
-        // JavaScript goes here
+        // JavaScript for button interactions
         const noButton = document.getElementById("no-btn");
         const yesButton = document.getElementById("yes-btn");
         const popup = document.getElementById("popup");
@@ -163,27 +201,16 @@
             noButton.style.top = Math.random() * 80 + "vh";
         });
 
-        // Show the popup, remove the background content, and trigger the balloon animation when "Yes" is clicked
+        // Show the popup, remove the background content, and trigger the confetti animation when "Yes" is clicked
         yesButton.addEventListener("click", () => {
             popup.style.display = "block";
             content.classList.add("hidden"); // Hide the background text
-            launchBalloons(); // Start the balloon animation
         });
 
         // Hide the popup when clicked
         popup.addEventListener("click", () => {
             popup.style.display = "none";
         });
-
-        // Function to animate the balloons
-        function launchBalloons() {
-            document.querySelectorAll('.balloon').forEach(balloon => {
-                balloon.style.animation = 'riseUp 6s ease-in infinite';
-            });
-        }
-
-        // Hide the popup initially
-        popup.style.display = "none";
     </script>
 </body>
 </html>
